@@ -1,0 +1,2 @@
+DEFAULT_TIMEOUT = 30000
+DEFAULT_URL = 'https://prom.ua/'
