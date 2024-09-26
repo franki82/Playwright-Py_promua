@@ -4,8 +4,7 @@ class GeneralSearch:
     def __init__(self, page: Page):
         self.page = page
         self._search_input = self.page.locator("//input[@name='search_term']")
-        self._start_search_button_not_active = self.page.locator("//button[@data-qaid='search_btn' and @disabled]")
-        self._start_search_button_active = self.page.locator("//button[@data-qaid='search_btn' and not(@disabled)]")
+        self._start_search_button = self.page.locator("//button[@data-qaid='search_btn']")
         self._search_results_element = self.page.locator("//div[@data-qaid='product_gallery']")
         self._search_results_items = self.page.locator("//div[@data-qaid='product_gallery']/div")
         self._search_count_of_items = self.page.locator("//div[@data-qaid='pagination']/div/span")
@@ -13,11 +12,12 @@ class GeneralSearch:
 
     def simple_search(self, search_value):
         expect(self._search_input).to_be_visible()
-        expect(self._start_search_button_not_active).to_be_visible()
-        expect(self._start_search_button_active).not_to_be_visible()
+        expect(self._start_search_button).to_be_visible()
+        expect(self._start_search_button).to_have_attribute("disabled", "")
         self._search_input.fill(search_value)
-        expect(self._start_search_button_active).to_be_visible()
-        self._start_search_button_active.click()
+        expect(self._start_search_button).not_to_have_attribute("disabled", "")
+        expect(self._search_input).to_have_value(search_value)
+        self._start_search_button.click()
         self.page.wait_for_load_state()
 
     def get_product_plates(self):
