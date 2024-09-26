@@ -26,3 +26,6 @@ class BaseFunctionality:
         if current_counter_of_error > self.counter_errors_in_class:
             self.counter_errors_in_class = current_counter_of_error
             self._create_screenshot()
+
+    def verify_true(self, condition, error_message):
+        assert condition, error_message
