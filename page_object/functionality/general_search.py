@@ -6,7 +6,7 @@ class GeneralSearch:
         self._search_input = self.page.locator("//input[@name='search_term']")
         self._start_search_button = self.page.locator("//button[@data-qaid='search_btn']")
         self._search_results_element = self.page.locator("//div[@data-qaid='product_gallery']")
-        self._search_results_items = self.page.locator("//div[@data-qaid='product_gallery']/div")
+        self._search_results_items = self.page.locator("//div[@data-qaid='product_gallery']//div[@data-product-id]")
         self._search_count_of_items = self.page.locator("//div[@data-qaid='pagination']/div/span")
         self._product_description_xpath = "div//span[@data-qaid='product_name']"
 
@@ -23,6 +23,7 @@ class GeneralSearch:
     def get_product_plates(self):
         expect(self._search_results_element).to_be_visible()
         self._search_count_of_items.scroll_into_view_if_needed()
+        self.page.wait_for_load_state(state='networkidle')
         return self._search_results_items.all()
 
     def get_product_description(self, plate_element:Locator):
